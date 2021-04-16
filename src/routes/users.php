@@ -2,6 +2,8 @@
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
+require __DIR__.'/../middleware/Auth.php';
+
 $app = new \Slim\App;
 
 $app->options('/{routes:.+}', function ($request, $response, $args) {
@@ -15,7 +17,6 @@ $app->add(function ($req, $res, $next) {
             ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
             ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
 });
-
 
 // Get All Users
 // Method: GET
@@ -34,7 +35,7 @@ $app->get('/api/users', function(Request $request, Response $response) {
     } catch(PDOException $e){
         return $response->withJson(['error' => ['text' => $e->getMessage()]]);
     }
-});
+})->add(new Auth());
 
 
 // Search Users By Keyword
@@ -55,7 +56,7 @@ $app->get('/api/users/search/{keyword}', function(Request $request, Response $re
     } catch(PDOException $e){
         return $response->withJson(['error' => ['text' => $e->getMessage()]]);
     }
-});
+})->add(new Auth());
 
 
 // Create New User
@@ -89,7 +90,7 @@ $app->post('/api/users/add', function(Request $request, Response $response){
     } catch(PDOException $e){
         return $response->withJson(['error' => ['text' => $e->getMessage()]]);
     }
-});
+})->add(new Auth());
 
 
 // Update Username
@@ -115,7 +116,7 @@ $app->patch('/api/users/update/{id}', function(Request $request, Response $respo
     } catch(PDOException $e){
         return $response->withJson(['error' => ['text' => $e->getMessage()]]);
     }
-});
+})->add(new Auth());
 
 
 // Toggle Dark Mode
@@ -145,7 +146,7 @@ $app->patch('/api/users/toggledarkmode/{id}', function(Request $request, Respons
     } catch(PDOException $e){
         return $response->withJson(['error' => ['text' => $e->getMessage()]]);
     }
-});
+})->add(new Auth());
 
 
 // Delete User
@@ -169,4 +170,4 @@ $app->delete('/api/users/delete/{id}', function(Request $request, Response $resp
     } catch(PDOException $e){
         return $response->withJson(['error' => ['text' => $e->getMessage()]]);
     }
-});
+})->add(new Auth());
