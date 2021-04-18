@@ -18,10 +18,14 @@ $app->add(function ($req, $res, $next) {
             ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
 });
 
+
+// /api/users route group
+$app->group('/api/users', function($app) {
+
 // Get All Users
 // Method: GET
 // Url: /api/users
-$app->get('/api/users', function(Request $request, Response $response) {
+$app->get('', function(Request $request, Response $response) {
     $query = "SELECT * FROM users";
 
     try{
@@ -35,13 +39,13 @@ $app->get('/api/users', function(Request $request, Response $response) {
     } catch(PDOException $err){
         return $response->withJson(['error' => ['text' => $err->getMessage()]]);
     }
-})->add(new Auth());
+});
 
 
 // Search Users By Keyword
 // Method: GET
 // Url: /api/users/search/{keyword}
-$app->get('/api/users/search/{keyword}', function(Request $request, Response $response) {
+$app->get('/search/{keyword}', function(Request $request, Response $response) {
     $keyword = $request->getAttribute('keyword');
     $query = "SELECT * FROM users WHERE username LIKE '%$keyword%' OR first_name LIKE '%$keyword%' OR last_name  LIKE '%$keyword%'";
 
@@ -56,13 +60,13 @@ $app->get('/api/users/search/{keyword}', function(Request $request, Response $re
     } catch(PDOException $err){
         return $response->withJson(['error' => ['text' => $err->getMessage()]]);
     }
-})->add(new Auth());
+});
 
 
 // Create New User
 // Method: POST
 // Url: /api/users/add
-$app->post('/api/users/add', function(Request $request, Response $response){
+$app->post('/add', function(Request $request, Response $response){
     $first_name = $request->getParam('first_name');
     $last_name = $request->getParam('last_name');
     $username = $request->getParam('username');
@@ -90,13 +94,13 @@ $app->post('/api/users/add', function(Request $request, Response $response){
     } catch(PDOException $err){
         return $response->withJson(['error' => ['text' => $err->getMessage()]]);
     }
-})->add(new Auth());
+});
 
 
 // Update Username
 // Method: PATCH
 // Url: /api/users/update/{id}
-$app->patch('/api/users/update/{id}', function(Request $request, Response $response){
+$app->patch('/update/{id}', function(Request $request, Response $response){
     $id = $request->getAttribute('id');
     $username = $request->getParam('username');
 
@@ -116,13 +120,13 @@ $app->patch('/api/users/update/{id}', function(Request $request, Response $respo
     } catch(PDOException $err){
         return $response->withJson(['error' => ['text' => $err->getMessage()]]);
     }
-})->add(new Auth());
+});
 
 
 // Toggle Dark Mode
 // Method: PATCH
 // Url: /api/users/toggledarkmode/{id}
-$app->patch('/api/users/toggledarkmode/{id}', function(Request $request, Response $response){
+$app->patch('/toggledarkmode/{id}', function(Request $request, Response $response){
     $id = $request->getAttribute('id');
 
     $query = "SELECT dark_mode FROM users WHERE id = $id";
@@ -146,13 +150,13 @@ $app->patch('/api/users/toggledarkmode/{id}', function(Request $request, Respons
     } catch(PDOException $err){
         return $response->withJson(['error' => ['text' => $err->getMessage()]]);
     }
-})->add(new Auth());
+});
 
 
 // Delete User
 // Method: DELETE
 // Url: /api/users/delete/{id}
-$app->delete('/api/users/delete/{id}', function(Request $request, Response $response){
+$app->delete('/delete/{id}', function(Request $request, Response $response){
     
     $id = $request->getAttribute('id');
     $query = "DELETE FROM users WHERE id = $id";
@@ -170,4 +174,6 @@ $app->delete('/api/users/delete/{id}', function(Request $request, Response $resp
     } catch(PDOException $err){
         return $response->withJson(['error' => ['text' => $err->getMessage()]]);
     }
-})->add(new Auth());
+});
+
+})->add(new Auth()); // Add authentication middleware
