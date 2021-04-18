@@ -32,8 +32,8 @@ $app->get('/api/users', function(Request $request, Response $response) {
         $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $db = null;
         return $response->withJson($users,200);
-    } catch(PDOException $e){
-        return $response->withJson(['error' => ['text' => $e->getMessage()]]);
+    } catch(PDOException $err){
+        return $response->withJson(['error' => ['text' => $err->getMessage()]]);
     }
 })->add(new Auth());
 
@@ -53,8 +53,8 @@ $app->get('/api/users/search/{keyword}', function(Request $request, Response $re
         $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $db = null;
         return $response->withJson($users,200);
-    } catch(PDOException $e){
-        return $response->withJson(['error' => ['text' => $e->getMessage()]]);
+    } catch(PDOException $err){
+        return $response->withJson(['error' => ['text' => $err->getMessage()]]);
     }
 })->add(new Auth());
 
@@ -87,8 +87,8 @@ $app->post('/api/users/add', function(Request $request, Response $response){
         
         return $response->withJson(['message' => ['text' => 'User created']],201);
         
-    } catch(PDOException $e){
-        return $response->withJson(['error' => ['text' => $e->getMessage()]]);
+    } catch(PDOException $err){
+        return $response->withJson(['error' => ['text' => $err->getMessage()]]);
     }
 })->add(new Auth());
 
@@ -113,8 +113,8 @@ $app->patch('/api/users/update/{id}', function(Request $request, Response $respo
 
         return $response->withJson(['message' => ['text' => 'Username updated']]);
 
-    } catch(PDOException $e){
-        return $response->withJson(['error' => ['text' => $e->getMessage()]]);
+    } catch(PDOException $err){
+        return $response->withJson(['error' => ['text' => $err->getMessage()]]);
     }
 })->add(new Auth());
 
@@ -141,10 +141,10 @@ $app->patch('/api/users/toggledarkmode/{id}', function(Request $request, Respons
         $stmt2 = $db->prepare($sql);
         $stmt2->execute();
 
-        return $response->withJson(['message' => ['text' => 'Dark mode updated']]);
+        return $response->withJson(['message' => ['text' => "Dark mode ".($isDark == true ? 'on' : 'off')]]);
 
-    } catch(PDOException $e){
-        return $response->withJson(['error' => ['text' => $e->getMessage()]]);
+    } catch(PDOException $err){
+        return $response->withJson(['error' => ['text' => $err->getMessage()]]);
     }
 })->add(new Auth());
 
@@ -165,9 +165,9 @@ $app->delete('/api/users/delete/{id}', function(Request $request, Response $resp
         $stmt->execute();
         $db = null;
 
-        return $response->withJson(['message' => ['text' => 'User Deleted']],200);
+        return $response->withJson(['message' => ['text' => 'User deleted']],200);
 
-    } catch(PDOException $e){
-        return $response->withJson(['error' => ['text' => $e->getMessage()]]);
+    } catch(PDOException $err){
+        return $response->withJson(['error' => ['text' => $err->getMessage()]]);
     }
 })->add(new Auth());

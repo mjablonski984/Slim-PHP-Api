@@ -6,7 +6,7 @@ class Auth
         if ($request->hasHeader('Authorization')) {
             $authHeader = $request->getHeader('Authorization');
             $bearerToken = '';
-            //  Usually only one authorisation scheme is provided, loop below could be replaced with $bearerToken = '$authHeader[0];
+            // Usually only one authorisation scheme is provided, loop below could be replaced with $bearerToken = '$authHeader[0];
             foreach ($authHeader as $token) {
                 if (stripos($token, 'Bearer ') == 0) {
                     $bearerToken = $token;
@@ -19,8 +19,8 @@ class Auth
             
             $token = substr($bearerToken,7);
             /*
-                When using a real token (e.g. JWT) the code below must be modified.
-                Token provided in the request header must be compared to a users token in your database.
+                When using a real token the code below must be modified and token provided in the request header 
+                must be compared to a users token in the database (A new db table is required to store valid tokens)
             */
 
             if ($token == "TEST_TOKEN") {
