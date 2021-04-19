@@ -89,9 +89,9 @@ class UserController
             $stmt->bindParam(':username', $username);
     
             $stmt->execute();
-            
+            $db = null;
             return $response->withJson(['message' => ['text' => 'User created']],201);
-            
+          
         } catch(PDOException $err){
             return $response->withJson(['error' => ['text' => $err->getMessage()]]);
         }
@@ -118,6 +118,7 @@ class UserController
             $stmt->bindParam(':username', $username);
 
             $stmt->execute();
+            $db = null;
 
             return $response->withJson(['message' => ['text' => 'Username updated']]);
 
@@ -125,6 +126,7 @@ class UserController
             return $response->withJson(['error' => ['text' => $err->getMessage()]]);
         }
     }
+
 
     // Toggle Dark Mode
     public function toggleDarkMode($request, $response, $args) {
@@ -136,7 +138,6 @@ class UserController
         }
 
         $query = "SELECT dark_mode FROM users WHERE id = $id";
-        
         
         try{
             $db = new db();
@@ -151,13 +152,15 @@ class UserController
             
             $stmt2 = $db->prepare($sql);
             $stmt2->execute();
-    
+            $db = null;
+   
             return $response->withJson(['message' => ['text' => "Dark mode ".($isDark == true ? 'on' : 'off')]]);
     
         } catch(PDOException $err){
             return $response->withJson(['error' => ['text' => $err->getMessage()]]);
         }
     }
+
 
     // Delete User
     public function delete($request, $response, $args) {  
@@ -176,8 +179,8 @@ class UserController
             $stmt = $db->prepare($query);
     
             $stmt->execute();
-            $db = null;
-    
+            $db = null;    
+
             return $response->withJson(['message' => ['text' => 'User deleted']],200);
     
         } catch(PDOException $err){

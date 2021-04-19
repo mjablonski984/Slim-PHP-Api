@@ -13,7 +13,7 @@ A simple RESTful API built with a Slim PHP micro framework. Data is stored in My
 <br/><br/>
 
 # Endpoints and cURL test commands:
-Modify your file structure to match test api routes (http://localhost/projects/rest_api_test).\
+Modify your file structure to match test api routes (http://localhost/projects/slim-php-api).\
 For testing purpose api requires fake bearer token: TEST_TOKEN. Auth middleware class must be modified to accept real tokens.
 <br/><br/>
 
@@ -27,7 +27,7 @@ GET /api/users
 <br/>
 
 ```
-curl -H "Accept: application/json" -H "Authorization: Bearer TEST_TOKEN" http://localhost/projects/rest_api_test/api/users
+curl -H "Accept: application/json" -H "Authorization: Bearer TEST_TOKEN" http://localhost/projects/slim-php-api/api/users
 ```
 <br/>
 
@@ -50,7 +50,7 @@ GET /api/users/search/{keyword}
 <br/>
 
 ```
-curl -H "Accept: application/json" -H "Authorization: Bearer TEST_TOKEN" http://localhost/projects/rest_api_test/api/users/search/john
+curl -H "Accept: application/json" -H "Authorization: Bearer TEST_TOKEN" http://localhost/projects/slim-php-api/api/users/search/john
 ```
 <br/>
 
@@ -72,7 +72,7 @@ POST /api/users/add
 ```
 curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer TEST_TOKEN" \
 --data '{"first_name":"Test", "last_name":"User", "username":"testuser"}' \
-http://localhost/projects/rest_api_test/api/users/add
+http://localhost/projects/slim-php-api/api/users/add
 ```
 <br/>
 
@@ -93,7 +93,7 @@ PATCH /api/users/update/{id}
 
 ```
 curl -X PATCH -H "Accept: application/json" -H "Authorization: Bearer TEST_TOKEN" \
-http://localhost/projects/rest_api_test/api/users/update/5 --data "username"="Ansmith"
+http://localhost/projects/slim-php-api/api/users/update/5 --data "username"="Ansmith"
 ```
 <br/>
 
@@ -114,7 +114,7 @@ PATCH /api/users/toggledarkmode/{id}
 
 ```
 curl -X PATCH -H "Accept: application/json" -H "Authorization: Bearer TEST_TOKEN" \
-http://localhost/projects/rest_api_test/api/users/toggledarkmode/5
+http://localhost/projects/slim-php-api/api/users/toggledarkmode/5
 ```
 <br/>
 
@@ -135,7 +135,7 @@ DELETE /api/users/delete/{id}
 
 ```
 curl -X DELETE -H "Accept: application/json" -H "Authorization: Bearer TEST_TOKEN" \
-http://localhost/projects/rest_api_test/api/users/delete/5
+http://localhost/projects/slim-php-api/api/users/delete/5
 ```
 <br/>
 
