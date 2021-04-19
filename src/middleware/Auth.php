@@ -6,13 +6,13 @@ class Auth
         if ($request->hasHeader('Authorization')) {
             $authHeader = $request->getHeader('Authorization');
             $bearerToken = '';
-            // Usually only one authorisation scheme is provided, loop below could be replaced with $bearerToken = '$authHeader[0];
+            // If only one authorisation scheme is provided, loop below can be replaced with $bearerToken = '$authHeader[0];
             foreach ($authHeader as $token) {
                 if (stripos($token, 'Bearer ') == 0) {
                     $bearerToken = $token;
                     break;
                 }else{
-                    $data = array(['error' => ['text' => 'Authorization token not found']]);
+                    $data = ['error' => ['text' => 'Authorization token not found']];
                     return $response->withJson($data,403);
                 }
             }
@@ -27,12 +27,12 @@ class Auth
                 $response = $next($request, $response);
                 return $response;
             }else{
-                $data = array(['error' => ['text' => 'Invalid token']]);
+                $data = ['error' => ['text' => 'Invalid token']];
                 return $response->withJson($data,403);
             }
  
         }else{
-            $data = array(['error' => ['text' => 'Authorization token not found']]);
+            $data = ['error' => ['text' => 'Authorization token not found']];
             return $response->withJson($data,403);
         }
     }

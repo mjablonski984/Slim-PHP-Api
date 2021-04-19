@@ -13,7 +13,8 @@ A simple RESTful API built with a Slim PHP micro framework. Data is stored in My
 <br/><br/>
 
 # Endpoints and cURL test commands:
-For testing purpose  api requires fake bearer token: TEST_TOKEN. Auth middleware class must be modified to accept real tokens.
+Modify your file structure to match test api routes (http://localhost/projects/rest_api_test).\
+For testing purpose api requires fake bearer token: TEST_TOKEN. Auth middleware class must be modified to accept real tokens.
 <br/><br/>
 
 - ## Get all users
